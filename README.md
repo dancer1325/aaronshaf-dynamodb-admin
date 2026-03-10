@@ -1,26 +1,53 @@
 # dynamodb-admin
 
-[![npm](https://img.shields.io/npm/v/dynamodb-admin.svg)](https://www.npmjs.com/package/dynamodb-admin)
-> GUI for [DynamoDB Local](https://aws.amazon.com/blogs/aws/dynamodb-local-for-desktop-development/), [dynalite](https://github.com/mhart/dynalite), [localstack](https://github.com/localstack/localstack) etc.
+* [![npm](https://img.shields.io/npm/v/dynamodb-admin.svg)](https://www.npmjs.com/package/dynamodb-admin)
+* GUI -- for --
+  * [DynamoDB Local](https://aws.amazon.com/blogs/aws/dynamodb-local-for-desktop-development/)
+  * [dynalite](https://github.com/mhart/dynalite)
+  *  [localstack](https://github.com/localstack/localstack)
 
-## Usage
+## ways to use
 
-### Use as globally installed app
+### -- as -- globally installed app
 
 ```bash
+# 1. install
 npm install -g dynamodb-admin
 
+# 2. run it
+# 2.1 all default options
 dynamodb-admin --dynamo-endpoint=http://localhost:8000
 ```
 
-Options:
- - `--open` / `-o` - opens server URL in a default browser on start
- - `--port PORT` / `-p PORT` -  Port to run on (default: 8001)
- - `--host HOST` / `-h HOST` -  Host to run on (default: localhost)
- - `--dynamo-endpoint` - DynamoDB endpoint to connect to (default: http://localhost:8000).
- - `--skip-default-credentials` - Skip setting default credentials and region. By default the accessKeyId/secretAccessKey are set to "key" and "secret" and the region is set to "us-east-1". If you specify this argument then you need to ensure that credentials are provided some other way. See https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/setting-credentials-node.html for more details on how default credentials provider works.
-
-Environment variables `HOST`, `PORT` and `DYNAMO_ENDPOINT` can also be used to set the respective options.
+* ways to pass options
+  * -- via -- CL options
+    * `--ALLOWEDOPTIONS`
+    * _Example:_ `dynamodb-admin --dynamo-endpoint=http://localhost:8000 --ALLOWEDOPTIONS`
+TODO: set identation
+* ALLOWEDOPTIONS
+  - `--open` / `-o`
+    - opens DIRECTLY server URL | your default browser
+  - `--port PORT` / `-p PORT`
+    - port | run on
+      - by default, 8001
+  - `--host HOST` / `-h HOST`
+    - host | run on
+      - by default, localhost
+  - `--dynamo-endpoint`
+    - DynamoDB endpoint | connect to
+      - by default, http://localhost:8000
+  - `--skip-default-credentials`
+    - Skip setting default credentials & region
+      - by default,
+        - accessKeyId/secretAccessKey == key/secret
+        - region == us-east-1
+      - requirements
+        - provide credentials -- via -- [other way](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/setting-credentials-node.html)
+      
+* -- via -- environment variables
+  * `HOST`
+  * `PORT`
+  * `DYNAMO_ENDPOINT`
 
 If you use a local dynamodb that cares about credentials, you can configure them by using the following environment variables `AWS_REGION` `AWS_ACCESS_KEY_ID` `AWS_SECRET_ACCESS_KEY` or specify the `--skip-default-credentials` argument and rely on the default AWS SDK credentials resolving behavior.
 
@@ -33,7 +60,7 @@ If you are accessing your database from another piece of software, the `AWS_ACCE
 
 By default `dynamodb-admin` sets a default key/secret to values "key" and "secret" and the region to "us-east-1".
 
-### Use as a library in your project
+### -- as a -- library | your project
 
 This requires AWS SDK v3.
 If you depend on AWS SDK v2 then you need to use dynamodb-admin v4.
