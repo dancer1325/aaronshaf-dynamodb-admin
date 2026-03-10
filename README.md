@@ -21,49 +21,40 @@ dynamodb-admin --dynamo-endpoint=http://localhost:8000
 
 * ways to pass options
   * -- via -- CL options
-    * `--ALLOWEDOPTIONS`
     * _Example:_ `dynamodb-admin --dynamo-endpoint=http://localhost:8000 --ALLOWEDOPTIONS`
-TODO: set identation
-* ALLOWEDOPTIONS
-  - `--open` / `-o`
-    - opens DIRECTLY server URL | your default browser
-  - `--port PORT` / `-p PORT`
-    - port | run on
-      - by default, 8001
-  - `--host HOST` / `-h HOST`
-    - host | run on
-      - by default, localhost
-  - `--dynamo-endpoint`
-    - DynamoDB endpoint | connect to
-      - by default, http://localhost:8000
-  - `--skip-default-credentials`
-    - Skip setting default credentials & region
-      - by default,
-        - accessKeyId/secretAccessKey == key/secret
-        - region == us-east-1
-      - requirements
-        - provide credentials -- via -- [other way](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/setting-credentials-node.html)
-      
-* -- via -- environment variables
-  * `HOST`
-  * `PORT`
-  * `DYNAMO_ENDPOINT`
-
-If you use a local dynamodb that cares about credentials, you can configure them by using the following environment variables `AWS_REGION` `AWS_ACCESS_KEY_ID` `AWS_SECRET_ACCESS_KEY` or specify the `--skip-default-credentials` argument and rely on the default AWS SDK credentials resolving behavior.
-
-For example with the `amazon/dynamodb-local` docker image you can launch `dynamodb-admin` with:
-
-```bash
-AWS_REGION=eu-west-1 AWS_ACCESS_KEY_ID=local AWS_SECRET_ACCESS_KEY=local dynamodb-admin
-```
-If you are accessing your database from another piece of software, the `AWS_ACCESS_KEY_ID` used by that application must match the `AWS_ACCESS_KEY_ID` you used with `dynamodb-admin` if you want both to see the same data.
-
-By default `dynamodb-admin` sets a default key/secret to values "key" and "secret" and the region to "us-east-1".
+    * `ALLOWEDOPTIONS`
+      - `--open` / `-o`
+        - opens DIRECTLY server URL | your default browser
+      - `--port PORT` / `-p PORT`
+        - port | run on
+          - by default, 8001
+      - `--host HOST` / `-h HOST`
+        - host | run on
+          - by default, localhost
+      - `--dynamo-endpoint`
+        - DynamoDB endpoint | connect to
+          - by default, http://localhost:8000
+      - `--skip-default-credentials`
+        - ⚠️skip setting default credentials & region⚠️
+          - by default,
+            - accessKeyId/secretAccessKey == key/secret
+            - region == us-east-1
+          - requirements
+            - provide credentials -- via -- [other way](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/setting-credentials-node.html) 
+  * -- via -- environment variables
+    * `HOST`
+    * `PORT`
+    * `DYNAMO_ENDPOINT`
+    * `AWS_REGION`
+    * `AWS_ACCESS_KEY_ID`
+    * `AWS_SECRET_ACCESS_KEY`
+    * _Example:_ `AWS_REGION=eu-west-1 AWS_ACCESS_KEY_ID=local AWS_SECRET_ACCESS_KEY=local dynamodb-admin`
 
 ### -- as a -- library | your project
 
-This requires AWS SDK v3.
-If you depend on AWS SDK v2 then you need to use dynamodb-admin v4.
+* requirements
+  * AWS SDK v3
+    * if you use AWS SDK v2 -> use dynamodb-admin v4
 
 ```js
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
@@ -82,18 +73,21 @@ server.on('listening', () => {
 });
 ```
 
+### -- as -- container
+
+* container images
+  * ONLY [dynamodb-admin](Dockerfile) 
+    * published | [DockerHub](https://hub.docker.com/r/aaronshaf/dynamodb-admin/)
+  * dynamodb-admin + dynamodb
+    * published | [DockerHub](https://github.com/instructure/dynamo-local-admin-docker)
+
 ## Development
 
-Run `npm run build` and then `DYNAMO_ENDPOINT=http://localhost:8000 npm run start` to start dynamodb-admin.
-
-You can set up a build watcher in a separate terminal using `npm run build:watch` which will re-compile the code on change and cause the dynamodb-admin instance to restart.
+* steps
+  * `npm run build` OR `npm run build:watch`
+  * `DYNAMO_ENDPOINT=http://localhost:8000 npm run start` 
+    * start dynamodb-admin
 
 ## See also
 
-* [aaronshaf/dynamodb-admin](https://hub.docker.com/r/aaronshaf/dynamodb-admin/) - docker image with dynamodb-admin only for integrating with your own stack
-* [instructure/dynamo-local-admin-docker](https://github.com/instructure/dynamo-local-admin-docker) - docker file with integrated dynamodb-admin and dynamodb
 * [Camin McCluskey's Quick Start Guide](https://medium.com/swlh/a-gui-for-local-dynamodb-dynamodb-admin-b16998323f8e)
-
-## Screencast
-
-![Screencast](https://d3vv6lp55qjaqc.cloudfront.net/items/2S1m213N1o2L231e011o/Screen%20Recording%202016-10-17%20at%2001.11%20PM.gif?X-CloudApp-Visitor-Id=ab2071d5f76f8504ab6d3070d8a2c5c3&v=e6056da9)
